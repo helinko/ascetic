@@ -1,2 +1,2 @@
 # ascetic
-A chatroom app.
+A chatroom app. 
