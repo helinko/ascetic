@@ -1,0 +1,20 @@
+body {
+    background-color: Black;
+}
+
+#header-links {
+    background-color: BurlyWood;
+    padding: 10px;
+}
+
+h1 {
+    color: Lime;
+}
+
+p {
+    color: Lime;
+}
+
+.message {
+    color: Red;
+}
