@@ -1,6 +1,6 @@
 # ascetic
 
-A [reagent](https://github.com/reagent-project/reagent) application designed to ... well, that part is up to you.
+A simple chat app using [reagent](https://github.com/reagent-project/reagent). Made for fun and learning, I guess.
 
 ## Development Mode
 
