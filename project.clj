@@ -31,7 +31,8 @@
                     :output-to            "resources/public/js/compiled/app.js"
                     :output-dir           "resources/public/js/compiled/dev"
                     :asset-path           "js/compiled/dev"
-                    :source-map-timestamp true}}
+                    :source-map-timestamp true
+                    :preloads [preloads.dev]}}
 
     {:id           "min"
      :source-paths ["src/cljs"]
