@@ -26,13 +26,12 @@
    [{:id           "dev"
      :source-paths ["src/cljs"]
      :figwheel     {:on-jsload "ascetic.core/reload"}
-     :compiler     {:main                 ascetic.core
+     :compiler     {:main                 ascetic.core 
                     :optimizations        :none
                     :output-to            "resources/public/js/compiled/app.js"
                     :output-dir           "resources/public/js/compiled/dev"
                     :asset-path           "js/compiled/dev"
-                    :source-map-timestamp true
-                    :preloads [preloads.dev]}}
+                    :source-map-timestamp true}}
 
     {:id           "min"
      :source-paths ["src/cljs"]
