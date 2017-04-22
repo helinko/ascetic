@@ -12,19 +12,20 @@
 (defonce messages
   (r/atom (sorted-map)))
 
-(defonce user (r/atom ""))
+(defonce username (r/atom ""))
 
 (defonce counter (r/atom 0))
 
 (defn add-message [text]
   (let [id (swap! counter inc)]
-    (swap! messages assoc id {:id id :message text})))
+    (swap! messages assoc id {:id id 
+                              :username @username 
+                              :message text})))
 
 (defonce init (do
                 (add-message "This is mediocre at best")
                 (add-message "Talk about under-whelming")
                 ))
-
 
 (defn msg-input []
   (let [msg (r/atom "")
@@ -46,14 +47,24 @@
                         nil)
         }])))
 
-
+;; So the username is updated to the global atom on-change.
+;; Add-message then lifts it from there to each message.
+(defn username-field []
+  [:input 
+   {:type "text"
+    :value @username
+    :id "username-input"
+    :placeholder "Give some username"
+    :on-change #(reset! 
+                 username 
+                 (-> % .-target .-value))}])
 
 ; TODO: Add user
 (defn message-area []
   [:div {:class "message-area"}
    (for [m (vals @messages)]
      [:div {:class "message" :key (str (:id m))} 
-      "Derp: " (:id m) " " (:message m)]
+      @username ": " (:id m) " " (:message m)]
      )])
 
 (defn ascetic-app []
@@ -62,6 +73,7 @@
     [:h1 "ascetic"]]
    [:section#main 
     [message-area]
+    [username-field]
     [msg-input]]])
 
  
