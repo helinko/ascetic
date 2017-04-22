@@ -16,22 +16,25 @@
 
 (defonce counter (r/atom 0))
 
-(defn add-message [text]
-  (let [id (swap! counter inc)]
+
+(defn create-message [text]
+  (let [id (swap! counter inc)
+        ; Not sure if this is idiomatic
+        username (if (empty? @username) "Anon" @username)]
     (swap! messages assoc id {:id id 
-                              :username @username 
+                              :username username 
                               :message text})))
 
 (defonce init (do
-                (add-message "This is mediocre at best")
-                (add-message "Talk about under-whelming")
+                (create-message "This is mediocre at best")
+                (create-message "Talk about under-whelming")
                 ))
 
 (defn msg-input []
   (let [msg (r/atom "")
         stop #(reset! msg "")
         save #(let [v (-> @msg str clojure.string/trim)]
-                (if-not (empty? v) (add-message v))
+                (if-not (empty? v) (create-message v))
                 (stop))]
     (fn [] 
       [:input 
@@ -39,7 +42,7 @@
         :value @msg 
         :id "msg-input" 
         :placeholder "Write something"
-        :class "msg-input-cl"
+        :class "msg-input"
         :on-change #(reset! msg (-> % .-target .-value))
         :on-key-down #(case (.-which %)
                         13 (save)
@@ -47,8 +50,8 @@
                         nil)
         }])))
 
-;; So the username is updated to the global atom on-change.
-;; Add-message then lifts it from there to each message.
+;; The username is updated to the global atom on-change.
+;; create-message then lifts it from there to each message.
 (defn username-field []
   [:input 
    {:type "text"
@@ -59,12 +62,11 @@
                  username 
                  (-> % .-target .-value))}])
 
-; TODO: Add user
 (defn message-area []
   [:div {:class "message-area"}
    (for [m (vals @messages)]
      [:div {:class "message" :key (str (:id m))} 
-      @username ": " (:id m) " " (:message m)]
+      (:username m) ": " (:id m) " " (:message m)]
      )])
 
 (defn ascetic-app []
