@@ -44,6 +44,8 @@
         :placeholder "Write something"
         :class "msg-input"
         :on-change #(reset! msg (-> % .-target .-value))
+        ;; 13=Esc is not that important here, but since 
+        ;; it was present in the example, leave it in.
         :on-key-down #(case (.-which %)
                         13 (save)
                         27 (stop)
