@@ -25,6 +25,7 @@
                 (add-message "Talk about under-whelming")
                 ))
 
+
 (defn msg-input []
   (let [msg (r/atom "")
         stop #(reset! msg "")
